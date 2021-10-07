@@ -9,6 +9,7 @@ class Movie < ActiveRecord::Base
       if ratings_list.empty?
         Movie.all
       else
-        Movie.where(ratings: ratings_list)                   
+        Movie.where(ratings: ratings_list)  
+      end
     end
 end
