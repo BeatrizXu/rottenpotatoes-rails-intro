@@ -29,12 +29,7 @@ class MoviesController < ApplicationController
         @clickedRelease = "bg-warning"
     else 
         @movies = Movie.with_ratings(@ratings_to_show)
-    end
-      
-        
-        
-      
-    
+    end   
   end
 
   def new
