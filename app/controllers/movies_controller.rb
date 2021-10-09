@@ -11,15 +11,29 @@ class MoviesController < ApplicationController
     if params[:ratings]
       @ratings_to_show = params[:ratings].keys
     elsif params[:commit] == "Refresh" && params[:ratings].blank?
-      session.delete(:ratings)
       @ratings_to_show = []
-    elsif session[:ratings]
-      @ratings_to_show = session[:ratings]
+    #elsif session[:ratings]
+      #@ratings_to_show = session[:ratings]
     else 
       @ratings_to_show = @all_ratings
     end
     @movies = Movie.with_ratings(@ratings_to_show)
     
+    if params[:sortByMovieTitle]
+        @movies = Movie.with_ratings(@ratings_to_show).order(:title)
+        @clickedTitle = "bg-warning"
+        #session[:sortByMovieTitle] = true
+        #session[:sortByReleaseDate] = true
+    elsif params[:sortByReleaseDate]
+        @movies = Movie.with_ratings(@ratings_to_show).order(:release_date)
+        @clickedRelease = "bg-warning"
+    else 
+        @movies = Movie.with_ratings(@ratings_to_show)
+    end
+      
+        
+        
+      
     
   end
 
