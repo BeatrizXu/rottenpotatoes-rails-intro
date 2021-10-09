@@ -10,10 +10,17 @@ class MoviesController < ApplicationController
     @all_ratings = Movie.all_ratings
     if params[:ratings]
       @ratings_to_show = params[:ratings].keys
+    elsif params[:commit] == "Refresh" && params[:ratings].blank?
+      session.delete(:ratings)
+      @ratings_to_show = []
+    elsif session[:ratings]
+      @ratings_to_show = session[:ratings]
     else 
       @ratings_to_show = @all_ratings
     end
     @movies = Movie.with_ratings(@ratings_to_show)
+    
+    
   end
 
   def new
